@@ -30,8 +30,17 @@ db.connect((err) => {
   console.log("Conexión a la base de datos establecida");
 });
 
+app.get("/integracion_tablas", (req, res) => {
+    const sql = "SELECT * FROM pacientes JOIN citas ON pacientes.id = citas.id JOIN medicos ON citas.id = medicos.id";
+    db.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
 // Rutas para la tabla 'pacientes'
 app.get("/pacientes", (req, res) => {
+//const sql = "SELECT * FROM prueba"; 
   const sql = "SELECT * FROM pacientes";
   db.query(sql, (err, result) => {
     if (err) throw err;
@@ -48,6 +57,8 @@ app.get("/pacientes/:id", (req, res) => {
   });
 });
 
+
+
 app.post("/pacientes", (req, res) => {
   const nuevoPasiente = req.body;
   const sql = "INSERT INTO pacientes SET ?";
@@ -60,7 +71,7 @@ app.post("/pacientes", (req, res) => {
 app.put("/pacientes/:id", (req, res) => {
   const { id } = req.params;
   const datosActualizados = req.body;
-  const sql = "UPDATE pacientes SET ? WHERE CLI_ID = ?";
+  const sql = "UPDATE pacientes SET ? WHERE id = ?";
   db.query(sql, [datosActualizados, id], (err, result) => {
     if (err) throw err;
     res.send("Paciente actualizado exitosamente");
@@ -106,7 +117,7 @@ app.get("/medicos", (req, res) => {
   app.put("/medicos/:id", (req, res) => {
     const { id } = req.params;
     const datosActualizados = req.body;
-    const sql = "UPDATE medicos SET ? WHERE CLI_ID = ?";
+    const sql = "UPDATE medicos SET ? WHERE id = ?";
     db.query(sql, [datosActualizados, id], (err, result) => {
       if (err) throw err;
       res.send("Medico actualizado exitosamente");
@@ -153,7 +164,7 @@ app.get("/consultorios", (req, res) => {
   app.put("/consultorios/:id", (req, res) => {
     const { id } = req.params;
     const datosActualizados = req.body;
-    const sql = "UPDATE consultorios SET ? WHERE CLI_ID = ?";
+    const sql = "UPDATE consultorios SET ? WHERE id = ?";
     db.query(sql, [datosActualizados, id], (err, result) => {
       if (err) throw err;
       res.send("Consultorio actualizado exitosamente");
@@ -200,7 +211,7 @@ app.get("/citas", (req, res) => {
   app.put("/citas/:id", (req, res) => {
     const { id } = req.params;
     const datosActualizados = req.body;
-    const sql = "UPDATE citas SET ? WHERE CLI_ID = ?";
+    const sql = "UPDATE citas SET ? WHERE id = ?";
     db.query(sql, [datosActualizados, id], (err, result) => {
       if (err) throw err;
       res.send("Cita actualizado exitosamente");
