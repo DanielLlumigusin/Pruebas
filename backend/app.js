@@ -8,17 +8,18 @@ const app = express();
 const port = 5000;
 const cors = require("cors");
 app.use(cors());
-// Configuración de body-parser para analizar JSON en las solicitudes POST
+
 app.use(bodyParser.json());
 const server = app.listen(port, () => {
   console.log(`Servidor iniciado en el puerto ${port}`);
 });
+
 // Configuración de la conexión a la base de datos
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
-  database: "tienda",
+  password: "Llumigusin98*",
+  database: "prueba",
 });
 
 // Conectar a la base de datos
